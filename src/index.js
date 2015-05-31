@@ -5,8 +5,6 @@
  */
 
 import request from 'request'
-import fs from 'fs'
-import util from 'util'
 
 const noop = function noop () {}
 

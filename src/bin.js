@@ -60,6 +60,7 @@ function runCli () {
         json: true,
         body: auth
       }, function (err, res, body) {
+        if (err) throw err
         if (res.statusCode === 200) {
           config.write(auth, err => {
             if (err) throw err

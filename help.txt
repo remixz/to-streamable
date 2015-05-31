@@ -15,4 +15,3 @@ Options:
   --no-resize    Tells Streamable to not resize final video.
 
   --mute         Tells Streamable to mute final video.
-
