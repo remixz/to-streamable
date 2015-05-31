@@ -1,0 +1,13 @@
+Usage: to-streamable [options] <path to video>
+
+Options:
+
+  --setup        Launches a wizard to save Streamable username and password.
+
+  --auth         Sets the username and password used for uploading.
+                 Must be in a colon pair. `to-streamable --auth=user:pass`
+                 If passed, this is preferred over any saved authentication.
+
+  --no-resize    Tells Streamable to not resize final video.
+
+  --mute         Tells Streamable to mute final video.
