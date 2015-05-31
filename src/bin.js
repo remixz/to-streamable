@@ -114,6 +114,11 @@ function runCli () {
               console.log(`Done! http://streamable.com/${shortcode}`)
               process.exit(0)
             }
+            if (body.status === 3) {
+              clearInterval(poll)
+              console.log(`Error: ${body.message}`)
+              process.exit(1)
+            }
           })
         }, 500)
       })
