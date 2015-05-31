@@ -21,6 +21,10 @@ Usage: to-streamable [options] <path to video>
 
 Options:
 
+  --help, -h     Prints this help message.
+
+  --version, -v  Prints current version.
+
   --setup        Launches a wizard to save Streamable username and password.
 
   --auth         Sets the username and password used for uploading.

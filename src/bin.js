@@ -7,8 +7,15 @@ import prompt from 'prompt'
 import request from 'request'
 import fs from 'fs'
 import path from 'path'
+import pkg from '../package.json'
 
-const argv = minimist(process.argv.slice(2), { boolean: true })
+const argv = minimist(process.argv.slice(2), {
+  boolean: true,
+  alias: {
+    version: 'v',
+    help: 'h'
+  }
+})
 const config = appCfg('to-streamable')
 const promptSchema = {
   properties: {
@@ -29,7 +36,6 @@ prompt.delimiter = ''
 prompt.colors = false
 
 function printHelp () {
-  console.log(__dirname + '/../help.txt')
   return fs.createReadStream(__dirname + '/../help.txt')
     .pipe(process.stdout)
     .on('close', function () { process.exit(1) })
@@ -37,6 +43,10 @@ function printHelp () {
 
 function runCli () {
   if (argv.help) return printHelp()
+  if (argv.version) {
+    console.log(pkg.version)
+    process.exit(0)
+  }
 
   if (argv.setup) {
     prompt.start()
@@ -93,12 +103,12 @@ function runCli () {
       console.log('Uploading...')
       upload.upload((err, body) => {
         if (err) throw err
-        let [ { shortcode } ] = body
+        let shortcode = upload.shortcode
 
         console.log('Processing...')
         let poll = setInterval(() => {
-          if (err) throw err
           upload.status((err, body) => {
+            if (err) throw err
             if (body.status === 2) {
               clearInterval(poll)
               console.log(`Done! http://streamable.com/${shortcode}`)
