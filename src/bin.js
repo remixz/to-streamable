@@ -5,6 +5,8 @@ import minimist from 'minimist'
 import appCfg from 'application-config'
 import prompt from 'prompt'
 import request from 'request'
+import concat from 'concat-stream'
+import fileType from 'file-type'
 import fs from 'fs'
 import path from 'path'
 import pkg from '../package.json'
@@ -89,10 +91,7 @@ function runCli () {
       return printHelp()
     }
 
-    let file = null
-    if (argv._[0] && typeof argv._[0] === 'string') {
-      file = fs.createReadStream(path.resolve(process.cwd(), argv._[0]))
-
+    function doUpload (file) {
       let params = []
       if (argv['no-resize']) params.push('noresize')
       if (argv['mute']) params.push('mute')
@@ -113,13 +112,31 @@ function runCli () {
             if (body.status === 2) {
               clearInterval(poll)
               console.log(`Done! http://streamable.com/${shortcode}`)
+              process.exit(0)
             }
           })
         }, 500)
       })
+    }
+
+    if (argv._[0] && typeof argv._[0] === 'string') {
+      // file path was passed
+      let file = fs.createReadStream(path.resolve(process.cwd(), argv._[0]))
+      doUpload(file)
     } else {
-      console.log('Error: No file path passed.')
-      return printHelp()
+      // no file path, use stdin
+      let stream = concat(buf => {
+        let info = fileType(buf)
+        let file = {
+          value: buf,
+          options: {
+            filename: `video.${info.ext}`,
+            contentType: info.mime
+          }
+        }
+        doUpload(file)
+      })
+      process.stdin.pipe(stream)
     }
   })
 }

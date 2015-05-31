@@ -17,7 +17,8 @@ npm install -g to-streamable
 ## Usage
 
 ```
-Usage: to-streamable [options] <path to video>
+Usage: to-streamable [options] [path to video file]
+If no video path is passed, then stdin is used.
 
 Options:
 

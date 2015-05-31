@@ -27,6 +27,8 @@
   "homepage": "https://github.com/remixz/to-streamable#readme",
   "dependencies": {
     "application-config": "^0.1.1",
+    "concat-stream": "^1.4.8",
+    "file-type": "^2.6.0",
     "minimist": "^1.1.1",
     "prompt": "^0.2.14",
     "request": "^2.56.0"
