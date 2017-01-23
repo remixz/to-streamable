@@ -67,7 +67,3 @@ Starts the upload of the video. `cb` is an optional callback function. Called wi
 ### `vid.status([cb(err, res)])`
 
 Retrieves the status of the video upload. `vid.upload()` must be called beforehand. `cb` is an optional callback function. Called with parameters `err`, containing an `Error`, if any, and `res`, with the object response from the Streamable API. See the [Streamable API Docs](http://streamable.com/documentation) for format.
-
-## Development
-
-`to-streamable` is written in the shiniest new ES6, and is compiled with [Babel](https://babeljs.io/). Whenever you make a change, you must run `npm run build` to recompile the module. One day, ES6 shall rule the land, and this workaround won't be needed anymore.
