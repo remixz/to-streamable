@@ -13,8 +13,8 @@ var upload = new ToStreamable({
 tap.test('upload', function (t) {
   upload.upload(function (err, res) {
     t.error(err, 'should be no errors')
-    t.ok(res.length > 0, 'should return an array')
-    t.type(res[0].shortcode, 'string', 'should have a proper shortcode')
+    t.equal(res.status, 1, 'correct status should be returned')
+    t.type(res.shortcode, 'string', 'should have a proper shortcode')
     t.end()
   })
 })

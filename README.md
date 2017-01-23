@@ -62,7 +62,7 @@ let opts = {
 
 ### `vid.upload([cb(err, res)])`
 
-Starts the upload of the video. `cb` is an optional callback function. Called with parameters `err`, containing an `Error`, if any, and `res`, with the array response from the Streamable API. See the [Streamable API Docs](http://streamable.com/documentation) for format.
+Starts the upload of the video. `cb` is an optional callback function. Called with parameters `err`, containing an `Error`, if any, and `res`, with the object response from the Streamable API. See the [Streamable API Docs](http://streamable.com/documentation) for format.
 
 ### `vid.status([cb(err, res)])`
 

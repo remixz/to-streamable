@@ -4,35 +4,32 @@
  * @package to-streamable
  */
 
-import request from 'request'
+const request = require('request')
 
 const noop = function noop () {}
 
-export default class ToStreamable {
-  constructor (opts={}) {
+class ToStreamable {
+  constructor (opts = {}) {
     this.opts = opts
     this.shortcode = null
   }
 
-  upload (cb=noop) {
-    let { file, auth, params=[] } = this.opts
+  upload (cb = noop) {
+    const { file, auth, params = [] } = this.opts
 
     if (!file) return cb(new Error('No file specified'))
     if (!auth) return cb(new Error('No auth specified'))
 
-    let paramString = ''
-    if (params.length > 0) {
-      paramString = `?${params.join('&')}`
-    }
+    const paramString = params.length > 0 ? `?${params.join('&')}` : ''
 
-    let req = request({
+    const req = request({
       method: 'POST',
       url: `https://api.streamable.com/upload${paramString}`,
       formData: { file },
       json: true,
       auth
     }, (err, res, body) => {
-      let [ { shortcode } ] = body
+      const { shortcode } = body
       this.shortcode = shortcode
       return cb(err, body)
     })
@@ -40,13 +37,13 @@ export default class ToStreamable {
     return req
   }
 
-  status (cb=noop) {
-    let { auth } = this.opts
-    let shortcode = this.shortcode
+  status (cb = noop) {
+    const { auth } = this.opts
+    const shortcode = this.shortcode
 
     if (!shortcode) return cb(new Error('No shortcode, upload file first'))
 
-    let req = request({
+    const req = request({
       method: 'GET',
       url: `https://api.streamable.com/videos/${shortcode}`,
       json: true,
@@ -56,3 +53,5 @@ export default class ToStreamable {
     return req
   }
 }
+
+module.exports = ToStreamable

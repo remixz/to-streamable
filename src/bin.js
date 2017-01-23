@@ -1,15 +1,15 @@
 #!/usr/bin/env node
 
-import ToStreamable from './'
-import minimist from 'minimist'
-import appCfg from 'application-config'
-import prompt from 'prompt'
-import request from 'request'
-import concat from 'concat-stream'
-import fileType from 'file-type'
-import fs from 'fs'
-import path from 'path'
-import pkg from '../package.json'
+const ToStreamable = require('./')
+const minimist = require('minimist')
+const appCfg = require('application-config')
+const prompt = require('prompt')
+const request = require('request')
+const concat = require('concat-stream')
+const fileType = require('file-type')
+const fs = require('fs')
+const path = require('path')
+const pkg = require('../package.json')
 
 const argv = minimist(process.argv.slice(2), {
   boolean: true,
@@ -38,7 +38,7 @@ prompt.delimiter = ''
 prompt.colors = false
 
 function printHelp () {
-  return fs.createReadStream(__dirname + '/../help.txt')
+  return fs.createReadStream(path.resolve(__dirname, '../help.txt'))
     .pipe(process.stdout)
     .on('close', function () { process.exit(1) })
 }
@@ -82,7 +82,7 @@ function runCli () {
     if (err) throw err
 
     if (argv.auth && typeof argv.auth === 'string') {
-      let [username, password] = argv.auth.split(':')
+      const [username, password] = argv.auth.split(':')
       auth = { username, password }
     }
 
@@ -92,21 +92,21 @@ function runCli () {
     }
 
     function doUpload (file) {
-      let params = []
+      const params = []
       if (argv['no-resize']) params.push('noresize')
       if (argv['mute']) params.push('mute')
 
-      let upload = new ToStreamable({
+      const upload = new ToStreamable({
         file, auth, params
       })
 
       console.log('Uploading...')
       upload.upload((err, body) => {
         if (err) throw err
-        let shortcode = upload.shortcode
+        const shortcode = upload.shortcode
 
         console.log('Processing...')
-        let poll = setInterval(() => {
+        const poll = setInterval(() => {
           upload.status((err, body) => {
             if (err) throw err
             if (body.status === 2) {
@@ -126,13 +126,13 @@ function runCli () {
 
     if (argv._[0] && typeof argv._[0] === 'string') {
       // file path was passed
-      let file = fs.createReadStream(path.resolve(process.cwd(), argv._[0]))
+      const file = fs.createReadStream(path.resolve(process.cwd(), argv._[0]))
       doUpload(file)
     } else {
       // no file path, use stdin
-      let stream = concat(buf => {
-        let info = fileType(buf)
-        let file = {
+      const stream = concat(buf => {
+        const info = fileType(buf)
+        const file = {
           value: buf,
           options: {
             filename: `video.${info.ext}`,

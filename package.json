@@ -2,12 +2,10 @@
   "name": "to-streamable",
   "version": "1.2.1",
   "description": "Upload video quickly to Streamable.com",
-  "main": "out/index.js",
-  "bin": "out/bin.js",
+  "main": "src/index.js",
+  "bin": "src/bin.js",
   "scripts": {
-    "test": "standard src/*.js && tap test/*.js",
-    "build": "babel -d out/ src/",
-    "prepublish": "npm run build"
+    "test": "standard src/*.js && tap test/*.js"
   },
   "repository": {
     "type": "git",
@@ -26,20 +24,15 @@
   },
   "homepage": "https://github.com/remixz/to-streamable#readme",
   "dependencies": {
-    "application-config": "^0.1.1",
-    "concat-stream": "^1.4.8",
-    "file-type": "^2.6.0",
-    "minimist": "^1.1.1",
-    "prompt": "^0.2.14",
-    "request": "^2.56.0"
+    "application-config": "^1.0.1",
+    "concat-stream": "^1.6.0",
+    "file-type": "^4.1.0",
+    "minimist": "^1.2.0",
+    "prompt": "^1.0.0",
+    "request": "^2.79.0"
   },
   "devDependencies": {
-    "babel": "^5.4.7",
-    "babel-eslint": "^3.1.9",
-    "standard": "^4.0.0",
-    "tap": "^1.2.0"
-  },
-  "standard": {
-    "parser": "babel-eslint"
+    "standard": "^8.6.0",
+    "tap": "^9.0.3"
   }
 }
